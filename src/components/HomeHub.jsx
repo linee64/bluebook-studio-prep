@@ -26,6 +26,7 @@ import {
   Loader2,
 } from 'lucide-react';
 import { BrandMascot } from './LogoMascot';
+import { SectionGuideModal } from './SectionGuideModal';
 
 const THEME_STYLES = {
   blue: {
@@ -331,6 +332,8 @@ export function HomeHub({
   onStartSession,
   onResetProgress,
 }) {
+  // Strategy guide modal state before config modal for core 3 modules
+  const [guideSectionId, setGuideSectionId] = useState(null);
   // Config modal state: either { kind: 'base', id } or { kind: 'custom', pack }
   const [configTarget, setConfigTarget] = useState(null);
   const [subSkillFilter, setSubSkillFilter] = useState('ALL');
@@ -819,7 +822,7 @@ export function HomeHub({
               return (
                 <div key={sec.id} className="flex flex-col">
                   <div
-                    onClick={() => openSectionModal({ kind: 'base', id: sec.id })}
+                    onClick={() => setGuideSectionId(sec.id)}
                     className="bb-card bb-card-hover rounded-3xl p-5 sm:p-6 flex flex-col justify-between cursor-pointer group lg:min-h-[300px]"
                   >
                     <div>
@@ -855,7 +858,7 @@ export function HomeHub({
 
                     <div className="mt-6 pt-4 border-t-2 border-[#EEF2FA] flex items-center justify-between">
                       <span className="text-xs font-bold text-[#284B9E] group-hover:underline">
-                        Configure &amp; Practice
+                        Strategy &amp; Practice
                       </span>
                       <div className="w-8 h-8 rounded-xl bg-[#EEF4FF] text-[#284B9E] flex items-center justify-center group-hover:bg-[#3B6EF6] group-hover:text-white transition-colors">
                         <ArrowRight className="w-4 h-4" />
@@ -1011,6 +1014,20 @@ export function HomeHub({
           </button>
         </div>
       </main>
+
+      {/* Strategy & Guide Modal (before test settings for the 3 core modules) */}
+      {guideSectionId && (
+        <SectionGuideModal
+          sectionId={guideSectionId}
+          totalCount={baseSectionStats[guideSectionId]?.total || 0}
+          onClose={() => setGuideSectionId(null)}
+          onProceed={() => {
+            const targetId = guideSectionId;
+            setGuideSectionId(null);
+            openSectionModal({ kind: 'base', id: targetId });
+          }}
+        />
+      )}
 
       {/* Section Practice Configuration Modal */}
       {configTarget && (
