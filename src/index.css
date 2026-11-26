@@ -10,6 +10,7 @@
     font-family: var(--font-ui);
     background-color: #F5F7FC;
     color: #17233C;
+    -webkit-tap-highlight-color: transparent;
   }
 }
 

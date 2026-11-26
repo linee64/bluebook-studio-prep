@@ -618,19 +618,19 @@ export function HomeHub({
     <div className="min-h-screen bg-[#F5F7FC] text-[#17233C]">
       {/* Top Navbar */}
       <header className="bg-white border-b-2 border-[#DCE4F3] sticky top-0 z-30">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-18 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5">
-            <BrandMascot className="w-11 h-11 shrink-0" />
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-lg sm:text-xl font-extrabold tracking-tight text-[#17233C]">
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 h-16 sm:h-18 flex items-center justify-between gap-2 sm:gap-4">
+          <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
+            <BrandMascot className="w-9 h-9 sm:w-11 sm:h-11 shrink-0" />
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <span className="text-base sm:text-xl font-extrabold tracking-tight text-[#17233C] truncate">
                   Bluebook Studio
                 </span>
-                <span className="px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider rounded-full bg-[#EEF4FF] text-[#284B9E] border border-[#C7D7FA]">
-                  Verbal Prep
+                <span className="hidden xs:inline-block sm:inline-block px-2 py-0.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider rounded-full bg-[#EEF4FF] text-[#284B9E] border border-[#C7D7FA] shrink-0">
+                  Verbal
                 </span>
               </div>
-              <p className="text-xs text-[#5A6B8C] font-medium">
+              <p className="hidden sm:block text-xs text-[#5A6B8C] font-medium">
                 Digital SAT Reading &amp; Writing Practice Bank
               </p>
             </div>
@@ -736,29 +736,29 @@ export function HomeHub({
               </p>
             </div>
 
-            <div className="mt-6 pt-5 border-t-2 border-[#EEF2FA] grid grid-cols-3 gap-4">
+            <div className="mt-6 pt-5 border-t-2 border-[#EEF2FA] grid grid-cols-3 gap-2 sm:gap-4">
               <div>
-                <div className="text-xs font-bold uppercase tracking-wider text-[#64748B]">
+                <div className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#64748B]">
                   Completed
                 </div>
-                <div className="mt-1 text-2xl font-extrabold text-[#17233C]">
+                <div className="mt-1 text-xl sm:text-2xl font-extrabold text-[#17233C]">
                   {overallStats.answered}
-                  <span className="text-sm font-bold text-[#8A99B5]"> / {overallStats.total}</span>
+                  <span className="text-xs sm:text-sm font-bold text-[#8A99B5]"> / {overallStats.total}</span>
                 </div>
               </div>
               <div>
-                <div className="text-xs font-bold uppercase tracking-wider text-[#64748B]">
+                <div className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#64748B]">
                   Accuracy
                 </div>
-                <div className="mt-1 text-2xl font-extrabold text-[#10B981]">
+                <div className="mt-1 text-xl sm:text-2xl font-extrabold text-[#10B981]">
                   {overallStats.answered > 0 ? `${overallStats.accuracy}%` : '—'}
                 </div>
               </div>
               <div>
-                <div className="text-xs font-bold uppercase tracking-wider text-[#64748B]">
+                <div className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#64748B]">
                   To Review
                 </div>
-                <div className="mt-1 text-2xl font-extrabold text-[#F59E0B]">
+                <div className="mt-1 text-xl sm:text-2xl font-extrabold text-[#F59E0B]">
                   {overallStats.mistakes + overallStats.bookmarked}
                 </div>
               </div>
@@ -820,7 +820,7 @@ export function HomeHub({
                 <div key={sec.id} className="flex flex-col">
                   <div
                     onClick={() => openSectionModal({ kind: 'base', id: sec.id })}
-                    className="bb-card bb-card-hover rounded-3xl p-6 flex flex-col justify-between cursor-pointer group min-h-[300px]"
+                    className="bb-card bb-card-hover rounded-3xl p-5 sm:p-6 flex flex-col justify-between cursor-pointer group lg:min-h-[300px]"
                   >
                     <div>
                       <div className="flex items-start justify-between gap-3">

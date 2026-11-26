@@ -60,6 +60,7 @@ export function ExamWorkspace({
   const [zoomImg, setZoomImg] = useState(null);
   const [confirmSubmit, setConfirmSubmit] = useState(false);
   const [starkaOpen, setStarkaOpen] = useState(false);
+  const [mobilePane, setMobilePane] = useState('passage'); // 'passage' | 'question'
 
   const passageRef = useRef(null);
 
@@ -69,6 +70,7 @@ export function ExamWorkspace({
 
   useEffect(() => {
     setStarkaOpen(false);
+    setMobilePane('passage');
   }, [currentUid]);
 
   const isReview = session.submitted;
@@ -172,9 +174,9 @@ export function ExamWorkspace({
   };
 
   return (
-    <div className="h-screen flex flex-col bg-[#F5F7FC] text-[#17233C] overflow-hidden">
+    <div className="h-[100dvh] flex flex-col bg-[#F5F7FC] text-[#17233C] overflow-hidden">
       {/* Top Bluebook-style Toolbar */}
-      <header className="bg-white border-b-2 border-[#DCE4F3] px-3 sm:px-6 h-16 shrink-0 flex items-center justify-between gap-2 z-30">
+      <header className="bg-white border-b-2 border-[#DCE4F3] px-3 sm:px-6 h-14 sm:h-16 shrink-0 flex items-center justify-between gap-2 z-30">
         {/* Left: Section & Directions */}
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <button
@@ -308,22 +310,72 @@ export function ExamWorkspace({
       </header>
 
       {/* Bluebook Dashed Header Strip */}
-      <div className="bg-[#EEF4FF] border-b border-[#D6E2F8] px-4 sm:px-6 py-1.5 shrink-0 flex items-center justify-between text-xs">
-        <div className="flex items-center gap-2 font-bold text-[#284B9E]">
-          <span>{question.sectionTitle}</span>
-          <span className="text-[#94A3B8]">•</span>
-          <span className="text-[#475569]">{question.subSkill}</span>
+      <div className="bg-[#EEF4FF] border-b border-[#D6E2F8] px-3 sm:px-6 py-1.5 shrink-0 flex items-center justify-between text-xs gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 font-bold text-[#284B9E] min-w-0 truncate">
+          <span className="truncate">{question.sectionTitle}</span>
+          <span className="text-[#94A3B8] shrink-0">•</span>
+          <span className="text-[#475569] truncate">{question.subSkill}</span>
         </div>
         {hlColor ? (
-          <div className="flex items-center gap-1.5 text-[#1E3A8A] font-bold">
+          <div className="hidden sm:flex items-center gap-1.5 text-[#1E3A8A] font-bold shrink-0">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Highlighter active ({hlColor}) — drag across passage text</span>
           </div>
         ) : (
-          <span className="hidden sm:inline text-[#64748B] font-semibold">
+          <span className="hidden sm:inline text-[#64748B] font-semibold shrink-0">
             ID: {question.id}
           </span>
         )}
+      </div>
+
+      {/* Mobile Passage / Question Tab Switcher (<lg) */}
+      <div className="lg:hidden bg-white border-b-2 border-[#DCE4F3] px-3 py-2 shrink-0 flex items-center gap-2">
+        <div className="flex-1 grid grid-cols-2 gap-1.5 p-1 rounded-xl bg-[#EEF4FF] border border-[#C7D7FA]">
+          <button
+            type="button"
+            onClick={() => setMobilePane('passage')}
+            className={`py-1.5 px-2.5 rounded-lg text-xs font-extrabold transition-colors cursor-pointer flex items-center justify-center gap-1.5 ${
+              mobilePane === 'passage'
+                ? 'bg-white text-[#17233C] shadow-xs'
+                : 'text-[#5A6B8C]'
+            }`}
+          >
+            <span>Passage</span>
+            {question.figure && (
+              <span className="px-1.5 py-0.2 rounded bg-[#DBEAFE] text-[#284B9E] text-[10px]">
+                Chart
+              </span>
+            )}
+          </button>
+          <button
+            type="button"
+            onClick={() => setMobilePane('question')}
+            className={`py-1.5 px-2.5 rounded-lg text-xs font-extrabold transition-colors cursor-pointer flex items-center justify-center gap-1.5 ${
+              mobilePane === 'question'
+                ? 'bg-white text-[#17233C] shadow-xs'
+                : 'text-[#5A6B8C]'
+            }`}
+          >
+            <span>Question</span>
+            {selected && (
+              <span className="px-1.5 py-0.2 rounded bg-[#3B6EF6] text-white text-[10px]">
+                {selected}
+              </span>
+            )}
+          </button>
+        </div>
+
+        <button
+          type="button"
+          onClick={() =>
+            setFontScale((s) => (s === 'sm' ? 'md' : s === 'md' ? 'lg' : 'sm'))
+          }
+          title="Cycle text size"
+          className="p-2 rounded-xl border-2 border-[#DCE4F3] bg-white text-xs font-extrabold text-[#334155] flex items-center gap-1 shrink-0 cursor-pointer"
+        >
+          <Type className="w-3.5 h-3.5" />
+          <span className="uppercase">{fontScale}</span>
+        </button>
       </div>
 
       {/* Directions Popover */}
@@ -365,9 +417,9 @@ export function ExamWorkspace({
         <section
           ref={passageRef}
           onMouseUp={handlePassageMouseUp}
-          className={`overflow-y-auto px-5 sm:px-9 py-6 sm:py-8 bg-[#FCFDFE] ${
+          className={`overflow-y-auto px-4 sm:px-9 py-5 sm:py-8 bg-[#FCFDFE] ${
             hlColor ? 'cursor-text' : ''
-          }`}
+          } ${mobilePane === 'passage' ? 'block' : 'hidden lg:block'}`}
         >
           <div className="max-w-2xl mx-auto space-y-4">
             {question.figure && (
@@ -457,7 +509,11 @@ export function ExamWorkspace({
         </section>
 
         {/* RIGHT PANE: Question & Answer Choices */}
-        <section className="overflow-y-auto px-5 sm:px-9 py-6 sm:py-8 bg-white">
+        <section
+          className={`overflow-y-auto px-4 sm:px-9 py-5 sm:py-8 bg-white ${
+            mobilePane === 'question' ? 'block' : 'hidden lg:block'
+          }`}
+        >
           <div className="max-w-xl mx-auto">
             {/* Bluebook Question Number Bar */}
             <div className="mb-4">
@@ -582,13 +638,13 @@ export function ExamWorkspace({
             {/* Practice Mode: Check Answer & Instant Feedback */}
             {session.mode === 'practice' && !isChecked && (
               <div className="mt-6 flex items-center justify-between gap-3">
-                <span className="text-xs text-[#64748B] font-semibold">
+                <span className="hidden sm:inline text-xs text-[#64748B] font-semibold">
                   Press <kbd className="px-1.5 py-0.5 rounded bg-[#F1F5F9] border border-[#CBD5E1]">A–D</kbd> to choose, <kbd className="px-1.5 py-0.5 rounded bg-[#F1F5F9] border border-[#CBD5E1]">Enter</kbd> to check
                 </span>
                 <button
                   onClick={() => selected && onCheckAnswer(currentUid)}
                   disabled={!selected}
-                  className="bb-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#3B6EF6] hover:bg-[#2E5CE0] text-white font-extrabold text-sm border-2 border-[#1B2A4A] shadow-[0_3px_0_#1B2A4A] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                  className="bb-btn w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 sm:py-2.5 rounded-xl bg-[#3B6EF6] hover:bg-[#2E5CE0] text-white font-extrabold text-sm border-2 border-[#1B2A4A] shadow-[0_3px_0_#1B2A4A] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                 >
                   <Check className="w-4 h-4" />
                   <span>Check Answer</span>
@@ -690,7 +746,7 @@ export function ExamWorkspace({
           </button>
 
           {showMap && (
-            <div className="absolute bottom-14 left-1/2 -translate-x-1/2 w-[320px] sm:w-[440px] bg-white border-2 border-[#1B2A4A] rounded-3xl shadow-[0_8px_0_#1B2A4A] p-5 z-50">
+            <div className="fixed bottom-18 left-1/2 -translate-x-1/2 w-[calc(100vw-24px)] max-w-[440px] bg-white border-2 border-[#1B2A4A] rounded-3xl shadow-[0_8px_0_#1B2A4A] p-4 sm:p-5 z-50">
               <div className="flex items-center justify-between pb-3 border-b-2 border-[#EEF2FA]">
                 <div>
                   <h4 className="font-extrabold text-sm text-[#17233C]">{session.title}</h4>

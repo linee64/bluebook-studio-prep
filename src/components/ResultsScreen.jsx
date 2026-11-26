@@ -66,27 +66,29 @@ export function ResultsScreen({
   return (
     <div className="min-h-screen bg-[#F5F7FC] text-[#17233C]">
       <header className="bg-white border-b-2 border-[#DCE4F3] sticky top-0 z-20">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+        <div className="max-w-5xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2 sm:gap-4">
           <button
             onClick={onReturnHome}
-            className="bb-btn inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border-2 border-[#D9E2F2] bg-white text-xs sm:text-sm font-bold text-[#17233C] shadow-[0_2px_0_#D9E2F2] cursor-pointer"
+            className="bb-btn inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2 rounded-xl border-2 border-[#D9E2F2] bg-white text-xs sm:text-sm font-bold text-[#17233C] shadow-[0_2px_0_#D9E2F2] cursor-pointer shrink-0"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Back to Hub</span>
+            <span className="hidden sm:inline">Back to Hub</span>
+            <span className="sm:hidden">Hub</span>
           </button>
 
-          <div className="text-sm font-extrabold text-[#284B9E] truncate">{session.title}</div>
+          <div className="text-xs sm:text-sm font-extrabold text-[#284B9E] truncate">{session.title}</div>
 
           {mistakeUids.length > 0 ? (
             <button
               onClick={() => onRetryMistakes(mistakeUids)}
-              className="bb-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#FFBE3B] text-[#17233C] font-extrabold text-xs sm:text-sm border-2 border-[#1B2A4A] shadow-[0_3px_0_#1B2A4A] cursor-pointer"
+              className="bb-btn inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl bg-[#FFBE3B] text-[#17233C] font-extrabold text-xs sm:text-sm border-2 border-[#1B2A4A] shadow-[0_3px_0_#1B2A4A] cursor-pointer shrink-0"
             >
               <RotateCcw className="w-4 h-4" />
-              <span>Retry Mistakes ({mistakeUids.length})</span>
+              <span className="hidden sm:inline">Retry Mistakes ({mistakeUids.length})</span>
+              <span className="sm:hidden">Retry ({mistakeUids.length})</span>
             </button>
           ) : (
-            <div className="w-24" />
+            <div className="w-12 sm:w-24" />
           )}
         </div>
       </header>
