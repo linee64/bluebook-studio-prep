@@ -1,0 +1,19 @@
+# Dependencies & build
+node_modules/
+dist/
+*.local
+
+# Environment & API keys
+.env
+.env.*
+!.env.example
+
+# Source SAT PDF folders
+craft and structure/
+information and idea/
+standart of english/
+
+# Logs & OS files
+*.log
+.DS_Store
+Thumbs.db

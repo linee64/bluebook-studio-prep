@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-ui: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-reading: 'Newsreader', Georgia, 'Times New Roman', serif;
+  }
+
+  body {
+    font-family: var(--font-ui);
+    background-color: #F5F7FC;
+    color: #17233C;
+  }
+}
+
+.font-reading {
+  font-family: var(--font-reading);
+}
+
+/* Tactile Bluebook-meets-cartoonish surface utilities */
+.bb-card {
+  background: #FFFFFF;
+  border: 2px solid #D9E2F2;
+  box-shadow: 0 4px 0 #D9E2F2;
+}
+
+.bb-card-hover {
+  transition: transform 0.14s ease, box-shadow 0.14s ease, border-color 0.14s ease;
+}
+.bb-card-hover:hover {
+  transform: translateY(-2px);
+  border-color: #93B4F8;
+  box-shadow: 0 6px 0 #C3D5F7;
+}
+
+.bb-btn {
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
+}
+.bb-btn:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: none !important;
+}
+
+/* Bluebook dashed top/bottom hairline rule for Reading & Writing header */
+.bb-dashed-rule {
+  background-image: repeating-linear-gradient(
+    to right,
+    #35538E 0 18px,
+    transparent 18px 24px
+  );
+  height: 2px;
+}
+
+/* Passage highlight colors */
+.hl-yellow {
+  background-color: #FFF08A;
+  border-radius: 3px;
+  padding: 0 2px;
+  cursor: pointer;
+}
+.hl-blue {
+  background-color: #BAE6FD;
+  border-radius: 3px;
+  padding: 0 2px;
+  cursor: pointer;
+}
+.hl-pink {
+  background-color: #FBCFE8;
+  border-radius: 3px;
+  padding: 0 2px;
+  cursor: pointer;
+}
+
